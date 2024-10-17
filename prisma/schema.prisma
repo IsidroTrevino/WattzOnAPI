@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  usuarioId        Int              @id @default(autoincrement())
+  nombre           String
+  email            String           @unique
+  password         String
+  ciudad           String?
+  estado           String?
+  fecharegistro    DateTime         @default(now())
+  apellido         String
+
+  electrodomesticos Electrodomestico[]
+  recibos           Recibo[]
+  tipsGuardados     TipsGuardados[]
+}
+
+model Electrodomestico {
+  electrodomesticoId Int      @id @default(autoincrement())
+  usuarioId          Int?
+  nombre             String
+  tipo               String?
+  consumowatts       Int?
+  descripcion        String?
+  urlimagen          String?
+  fecharegistro      DateTime @default(now())
+
+  usuario            Usuario? @relation(fields: [usuarioId], references: [usuarioId], onDelete: Cascade)
+}
+
+model Recibo {
+  reciboId           Int      @id @default(autoincrement())
+  usuarioId          Int?
+  fechainicioperiodo DateTime
+  fechafinperiodo    DateTime
+  consumo            Float?
+  monto              Float?
+  tarifa             Float?
+
+  usuario            Usuario? @relation(fields: [usuarioId], references: [usuarioId], onDelete: Cascade)
+}
+
+model Tip {
+  tipId         Int            @id @default(autoincrement())
+  categoria     String
+  contenido     String
+
+  tipsGuardados TipsGuardados[]
+}
+
+model TipsGuardados {
+  tipguardadoId Int     @id @default(autoincrement())
+  usuarioid     Int
+  tipid         Int
+
+  usuario       Usuario @relation(fields: [usuarioid], references: [usuarioId], onDelete: Cascade)
+  tip           Tip     @relation(fields: [tipid], references: [tipId], onDelete: Cascade)
+}

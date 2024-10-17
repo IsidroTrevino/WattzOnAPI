@@ -14,6 +14,6 @@ app.use('/api/wattzon/tip', tipRoutes);
 app.use('/api/wattzon/recibo', reciboRoutes);
 app.use('/api/wattzon/electrodomestico', electrodomesticoRoutes);
 
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
-});
+app.listen(3000)
+
+console.log('Server on port', 3000);

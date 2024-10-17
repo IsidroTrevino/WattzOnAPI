@@ -51,19 +51,7 @@ Crea un archivo .env en la raíz del proyecto. Este archivo debe contener la con
 
 Asegúrate de utilizar sslmode=require si tu base de datos está configurada para conexiones SSL.
 
-
-### 4. Configurar Prisma
-Prisma se conecta a la base de datos utilizando la variable DATABASE_URL definida en el archivo .env. Para sincronizar el esquema de la base de datos y generar el cliente de Prisma, ejecuta los siguientes comandos:
-
-```bash
-npx prisma db pull
-npx prisma generate
-npx prisma db pull: Obtiene el esquema de la base de datos y lo refleja en el archivo schema.prisma.
-npx prisma generate: Genera el cliente de Prisma con base en el esquema actualizado.
-Estos comandos son esenciales para que Prisma administre la conexión y las consultas a la base de datos.
-```
-
-### 5. Ejecutar el Proyecto
+### 4. Ejecutar el Proyecto
 Con las dependencias instaladas y las variables de entorno configuradas, ahora puedes iniciar el proyecto en modo de desarrollo usando:
 
 ```bash

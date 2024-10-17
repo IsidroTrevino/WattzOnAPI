@@ -1,7 +1,5 @@
 # WattzOnAPI
 
-Bienvenido a **WattzOnAPI**, un proyecto que proporciona una API construida con Node.js, Express y Prisma. Este proyecto está diseñado para ofrecer una conectividad robusta y eficiente a una base de datos PostgreSQL alojada en Aiven. Sigue esta guía para configurar, ejecutar y comprender el funcionamiento del proyecto.
-
 ## Tabla de Contenidos
 
 - [Requisitos](#requisitos)

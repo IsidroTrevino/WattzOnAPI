@@ -4,7 +4,6 @@ import tipRoutes from './routes/tip.routes.js';
 import reciboRoutes from './routes/recibo.routes.js';
 import electrodomesticoRoutes from './routes/electrodomestico.routes.js';
 
-
 const app = express();
 
 app.use(express.json());
@@ -14,7 +13,6 @@ app.use('/api/wattzon/tip', tipRoutes);
 app.use('/api/wattzon/recibo', reciboRoutes);
 app.use('/api/wattzon/electrodomestico', electrodomesticoRoutes);
 
-app.listen(3000, '192.168.100.30');
-
+app.listen(3000, '10.22.135.186');
 
 console.log('Server on port', 3000);

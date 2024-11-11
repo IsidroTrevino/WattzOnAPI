@@ -43,9 +43,12 @@ router.get('/:id', async (req, res) => {
             electrodomesticoId: electrodomestico.electrodomesticoId,
             usuarioId: electrodomestico.usuarioId,
             nombre: electrodomestico.nombre,
+            tipo: electrodomestico.tipo,
+            marca: electrodomestico.marca,
+            modelo: electrodomestico.modelo,
+            consumowatts: electrodomestico.consumowatts,
             descripcion: electrodomestico.descripcion,
-            potencia: electrodomestico.potencia,
-            horasuso: electrodomestico.horasuso
+            urlimagen: electrodomestico.urlimagen,
         });
     } catch (error) {
         console.error(error);
@@ -54,7 +57,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const {usuarioId, nombre, tipo, consumoWatts, descripcion, urlimagen} = req.body;
+    const { usuarioId, nombre, tipo, marca, modelo, consumowatts, descripcion, urlimagen } = req.body;
 
     try {
         const electrodomestico = await prisma.electrodomestico.create({
@@ -62,7 +65,9 @@ router.post('/', async (req, res) => {
                 usuarioId,
                 nombre,
                 tipo,
-                consumoWatts,
+                marca,
+                modelo,
+                consumowatts,
                 descripcion,
                 urlimagen
             }
@@ -78,7 +83,7 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const { id } = req.params;
-    const { nombre, tipo, consumoWatts, descripcion, urlimagen } = req.body;
+    const { nombre, tipo, marca, modelo, consumowatts, descripcion, urlimagen } = req.body;
 
     try {
         const electrodomestico = await prisma.electrodomestico.update({
@@ -88,7 +93,9 @@ router.put('/:id', async (req, res) => {
             data: {
                 nombre,
                 tipo,
-                consumoWatts,
+                marca,
+                modelo,
+                consumowatts,
                 descripcion,
                 urlimagen
             }

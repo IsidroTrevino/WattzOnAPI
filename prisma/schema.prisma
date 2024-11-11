@@ -36,6 +36,8 @@ model Electrodomestico {
   consumowatts       Int?
   descripcion        String?
   urlimagen          String?
+  marca              String             // Newly added field
+  modelo             String             // Newly added field
   fecharegistro      DateTime @default(now())
 
   usuario            Usuario? @relation(fields: [usuarioId], references: [usuarioId], onDelete: Cascade)

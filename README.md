@@ -7,13 +7,9 @@
   - [1. Clonar el Repositorio](#1-clonar-el-repositorio)
   - [2. Instalar Dependencias](#2-instalar-dependencias)
   - [3. Configurar Variables de Entorno](#3-configurar-variables-de-entorno)
-  - [4. Configurar Prisma](#4-configurar-prisma)
-  - [5. Ejecutar el Proyecto](#5-ejecutar-el-proyecto)
-- [Comandos Útiles](#comandos-útiles)
-- [Notas Adicionales](#notas-adicionales)
-- [Resolución de Problemas Comunes](#resolución-de-problemas-comunes)
-- [Contribuciones](#contribuciones)
-- [Licencia](#licencia)
+  - [4. Ejecutar el Proyecto](#4-ejecutar-el-proyecto)
+- [Liberación en Producción](#liberación-en-producción)
+- [Stack Tecnológico](#stack-tecnológico)
 
 ---
 
@@ -58,3 +54,20 @@ Con las dependencias instaladas y las variables de entorno configuradas, ahora p
 npm run dev
 ```
 Esto iniciará el servidor en el puerto predeterminado de tu archivo de configuración (generalmente el puerto 3000). Ahora puedes acceder a la API visitando http://localhost:3000.
+
+## Liberación en Producción
+
+Para liberar esta API en un entorno de producción, sigue estos pasos:
+
+1. **Instalar Dependencias**: Asegúrate de tener todas las dependencias necesarias instaladas en el entorno de producción ejecutando `npm install`.
+2. **Configurar Variables de Entorno**: Define las variables necesarias en producción en el archivo `.env` o en el sistema de gestión de variables del servidor.
+3. **Iniciar en Modo Producción**: Ejecuta el comando `npm run dev` para iniciar el servidor en producción.
+
+
+## Stack Tecnológico
+
+- **Backend**: Node.js, Express, Prisma, PostgreSQL.
+- **Frontend** (si aplica): [Framework o Librería de Frontend, ej. React].
+- **Herramientas adicionales**: [Ej. Docker, Vercel para despliegue, etc.].
+
+...

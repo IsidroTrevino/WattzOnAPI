@@ -13,6 +13,6 @@ app.use('/api/wattzon/tip', tipRoutes);
 app.use('/api/wattzon/recibo', reciboRoutes);
 app.use('/api/wattzon/electrodomestico', electrodomesticoRoutes);
 
-app.listen(3000, '10.22.135.186');
+app.listen(3000);
 
 console.log('Server on port', 3000);

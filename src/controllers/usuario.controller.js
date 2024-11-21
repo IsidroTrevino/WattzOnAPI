@@ -1,7 +1,10 @@
-import { PrismaClient } from '@prisma/client';
+import jwt from 'jsonwebtoken';
+import { jwtSecret } from '../../config.js'
 import crypto from 'crypto';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
+
 
 export const loginController = async (req, res) => {
   const { email, password } = req.query;
@@ -21,14 +24,19 @@ export const loginController = async (req, res) => {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
+    const token = jwt.sign({ usuarioId: usuario.usuarioId }, jwtSecret);
+
     res.json({
-      usuarioId: usuario.usuarioId,
-      nombre: usuario.nombre,
-      apellido: usuario.apellido,
-      email: usuario.email,
-      ciudad: usuario.ciudad,
-      estado: usuario.estado,
-      fecharegistro: usuario.fecharegistro,
+      token,
+      usuario: {
+        usuarioId: usuario.usuarioId,
+        nombre: usuario.nombre,
+        apellido: usuario.apellido,
+        email: usuario.email,
+        ciudad: usuario.ciudad,
+        estado: usuario.estado,
+        fecharegistro: usuario.fecharegistro,
+      },
     });
   } catch (error) {
     console.error(error);
@@ -37,33 +45,38 @@ export const loginController = async (req, res) => {
 };
 
 export const registerController = async (req, res) => {
-  const { nombre, apellido, email, password, ciudad, estado } = req.body;
-
-  try {
-    if (!nombre || !apellido || !email || !password || !ciudad || !estado) {
-      return res.status(400).json({ error: 'All fields are required' });
+    const { nombre, apellido, email, password, ciudad, estado } = req.body;
+  
+    try {
+      if (!nombre || !apellido || !email || !password || !ciudad || !estado) {
+        return res.status(400).json({ error: 'All fields are required' });
+      }
+  
+      const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
+  
+      const usuario = await prisma.usuario.create({
+        data: { nombre, apellido, email, password: hashedPassword, ciudad, estado },
+      });
+  
+      const token = jwt.sign({ usuarioId: usuario.usuarioId }, jwtSecret, { expiresIn: jwtExpiresIn });
+  
+      res.json({
+        token,
+        usuario: {
+          usuarioId: usuario.usuarioId,
+          nombre: usuario.nombre,
+          apellido: usuario.apellido,
+          email: usuario.email,
+          ciudad: usuario.ciudad,
+          estado: usuario.estado,
+          fecharegistro: usuario.fecharegistro,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
     }
-
-    const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
-
-    const usuario = await prisma.usuario.create({
-      data: { nombre, apellido, email, password: hashedPassword, ciudad, estado },
-    });
-
-    res.json({
-      usuarioId: usuario.usuarioId,
-      nombre: usuario.nombre,
-      apellido: usuario.apellido,
-      email: usuario.email,
-      ciudad: usuario.ciudad,
-      estado: usuario.estado,
-      fecharegistro: usuario.fecharegistro,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-};
+  };
 
 export const getUserController = async (req, res) => {
   const { id } = req.params;

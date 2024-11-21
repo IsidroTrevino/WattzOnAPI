@@ -9,6 +9,7 @@
   - [3. Configurar Variables de Entorno](#3-configurar-variables-de-entorno)
   - [4. Ejecutar el Proyecto](#4-ejecutar-el-proyecto)
 - [Liberación en Producción](#liberación-en-producción)
+- [Uso de rutas protegidas](#uso-de-rutas-protegidas)
 - [Stack Tecnológico](#stack-tecnológico)
 
 ---
@@ -63,6 +64,8 @@ Para liberar esta API en un entorno de producción, sigue estos pasos:
 2. **Configurar Variables de Entorno**: Define las variables necesarias en producción en el archivo `.env` o en el sistema de gestión de variables del servidor.
 3. **Iniciar en Modo Producción**: Ejecuta el comando `npm run dev` para iniciar el servidor en producción.
 
+## Uso de rutas protegidas
+Para poder usar una ruta protegida por los json web tokens, primero se debe de poner la ruta protegida, e.j: http://localhost:3000/api/wattzon/electrodomestico/usuario/4 seguido de un parametro token en la ruta ?token="your_token", un ejemplo de una ruta con el token es: http://localhost:3000/api/wattzon/electrodomestico/usuario/4?token=tu_token el token puede ser obtenido al momento en el que un usuario crea su cuenta o hace log in.
 
 ## Stack Tecnológico
 

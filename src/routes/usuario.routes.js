@@ -10,7 +10,7 @@ import { authenticateToken } from '../middleware/auth.js';
 
 const router = Router();
 
-router.get('/login', loginController);
+router.post('/login', loginController);
 router.post('/register', registerController);
 router.get('/:id', authenticateToken, getUserController);
 router.put('/:id', authenticateToken, updateUserController);

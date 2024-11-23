@@ -1,13 +1,12 @@
 import jwt from 'jsonwebtoken';
-import { jwtSecret } from '../../config.js'
+import { jwtSecret } from '../../config.js';
 import crypto from 'crypto';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-
 export const loginController = async (req, res) => {
-  const { email, password } = req.query;
+  const { email, password } = req.body;
 
   try {
     if (!email || !password) {
@@ -24,7 +23,7 @@ export const loginController = async (req, res) => {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
-    const token = jwt.sign({ usuarioId: usuario.usuarioId }, jwtSecret);
+    const token = jwt.sign({ usuarioId: usuario.usuarioId }, jwtSecret, { expiresIn: '1h' });
 
     res.json({
       token,

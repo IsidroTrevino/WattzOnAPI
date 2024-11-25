@@ -57,7 +57,7 @@ export const registerController = async (req, res) => {
         data: { nombre, apellido, email, password: hashedPassword, ciudad, estado },
       });
   
-      const token = jwt.sign({ usuarioId: usuario.usuarioId }, jwtSecret, { expiresIn: jwtExpiresIn });
+      const token = jwt.sign({ usuarioId: usuario.usuarioId }, jwtSecret);
   
       res.json({
         token,

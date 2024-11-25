@@ -46,10 +46,10 @@ model Electrodomestico {
 model Recibo {
   idRecibo        Int              @id @default(autoincrement())
   usuarioId       Int
+  FinPeriodo      DateTime
+  InicioPeriodo   DateTime
   LecturaActual   Int
   LecturaAnterior Int
-  InicioPeriodo   DateTime
-  FinPeriodo      DateTime
   Subtotal        Float
 
   usuario         Usuario          @relation(fields: [usuarioId], references: [usuarioId], onDelete: Cascade)
@@ -66,7 +66,6 @@ model Concepto {
   recibo               Recibo             @relation(fields: [idRecibo], references: [idRecibo], onDelete: Cascade, name: "ReciboConcepto")
   categoriaConcepto    CategoriaConcepto  @relation(fields: [idCategoriaConcepto], references: [idCategoriaConcepto], onDelete: Cascade)
 }
-
 
 model CategoriaConcepto {
   idCategoriaConcepto  Int                @id @default(autoincrement())

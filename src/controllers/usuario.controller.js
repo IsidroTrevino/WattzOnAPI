@@ -23,7 +23,7 @@ export const loginController = async (req, res) => {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
-    const token = jwt.sign({ usuarioId: usuario.usuarioId }, jwtSecret);
+    const token = jwt.sign({ usuarioId: usuario.usuarioId }, jwtSecret, { expiresIn: '1h' });
 
     res.json({
       token,
@@ -42,7 +42,6 @@ export const loginController = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
-
 export const registerController = async (req, res) => {
   const { nombre, apellido, email, password, ciudad, estado } = req.body;
 

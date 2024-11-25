@@ -51,7 +51,6 @@ model Recibo {
   InicioPeriodo   DateTime
   FinPeriodo      DateTime
   Subtotal        Decimal          @db.Decimal(10, 2)
-  idConcepto      Int?
 
   usuario         Usuario          @relation(fields: [usuarioId], references: [usuarioId], onDelete: Cascade)
   concepto        Concepto[]       @relation("ReciboConcepto")

@@ -48,7 +48,9 @@ export const getRecibosByUsuarioId = async (req, res) => {
       where: { usuarioId: parseInt(id) },
       include: {
         concepto: {
-          include: { categoriaConcepto: true },
+          include: {
+            categoriaConcepto: true,
+          },
         },
       },
     });
@@ -66,7 +68,6 @@ export const getRecibosByUsuarioId = async (req, res) => {
       FinPeriodo: recibo.FinPeriodo,
       Subtotal: recibo.Subtotal,
       conceptos: recibo.concepto.map((concepto) => ({
-        idConcepto: concepto.idConcepto,
         categoria: concepto.categoriaConcepto.Consumo,
         TotalPeriodo: concepto.TotalPeriodo,
         Precio: concepto.Precio,

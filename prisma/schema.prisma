@@ -44,35 +44,31 @@ model Electrodomestico {
 }
 
 model Recibo {
-  idRecibo        Int              @id @default(autoincrement())
-  usuarioId       Int
-  LecturaActual   Int
+  idRecibo       Int        @id @default(autoincrement())
+  usuarioId      Int
+  LecturaActual  Int
   LecturaAnterior Int
-  InicioPeriodo   DateTime
-  FinPeriodo      DateTime
-  Subtotal        Float
-
-  usuario         Usuario          @relation(fields: [usuarioId], references: [usuarioId], onDelete: Cascade)
-  concepto        Concepto[]       @relation("ReciboConcepto")
+  InicioPeriodo  DateTime
+  FinPeriodo     DateTime
+  Subtotal       Float
+  concepto       Concepto[]
+  Usuario        Usuario    @relation(fields: [usuarioId], references: [usuarioId])
 }
 
 model Concepto {
-  idConcepto           Int                @id @default(autoincrement())
-  idRecibo             Int
-  idCategoriaConcepto  Int
-  TotalPeriodo         Int
-  Precio               Float
-
-  recibo               Recibo             @relation(fields: [idRecibo], references: [idRecibo], onDelete: Cascade, name: "ReciboConcepto")
-  categoriaConcepto    CategoriaConcepto  @relation(fields: [idCategoriaConcepto], references: [idCategoriaConcepto], onDelete: Cascade)
+  idConcepto          Int                @id @default(autoincrement())
+  idRecibo            Int
+  idCategoriaConcepto Int
+  TotalPeriodo        Int
+  Precio              Float
+  recibo              Recibo             @relation(fields: [idRecibo], references: [idRecibo])
+  categoriaConcepto   CategoriaConcepto  @relation(fields: [idCategoriaConcepto], references: [idCategoriaConcepto])
 }
 
-
 model CategoriaConcepto {
-  idCategoriaConcepto  Int                @id @default(autoincrement())
-  Consumo              String             @db.VarChar(20)
-
-  conceptos            Concepto[]
+  idCategoriaConcepto Int       @id @default(autoincrement())
+  Consumo             String
+  conceptos           Concepto[]
 }
 
 model Tip {

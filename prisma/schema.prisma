@@ -44,25 +44,25 @@ model Electrodomestico {
 }
 
 model Recibo {
-  idRecibo       Int        @id @default(autoincrement())
-  usuarioId      Int
-  LecturaActual  Int
+  idRecibo        Int        @id @default(autoincrement())
+  usuarioId       Int
+  LecturaActual   Int
   LecturaAnterior Int
-  InicioPeriodo  DateTime
-  FinPeriodo     DateTime
-  Subtotal       Float
-  concepto       Concepto[]
-  Usuario        Usuario    @relation(fields: [usuarioId], references: [usuarioId])
+  InicioPeriodo   DateTime
+  FinPeriodo      DateTime
+  Subtotal        Float
+  concepto        Concepto[]
+  Usuario         Usuario    @relation(fields: [usuarioId], references: [usuarioId])
 }
 
 model Concepto {
-  idConcepto          Int                @id @default(autoincrement())
+  idConcepto          Int               @id @default(autoincrement())
   idRecibo            Int
   idCategoriaConcepto Int
   TotalPeriodo        Int
   Precio              Float
-  recibo              Recibo             @relation(fields: [idRecibo], references: [idRecibo])
-  categoriaConcepto   CategoriaConcepto  @relation(fields: [idCategoriaConcepto], references: [idCategoriaConcepto])
+  recibo              Recibo            @relation(fields: [idRecibo], references: [idRecibo])
+  categoriaConcepto   CategoriaConcepto @relation(fields: [idCategoriaConcepto], references: [idCategoriaConcepto])
 }
 
 model CategoriaConcepto {

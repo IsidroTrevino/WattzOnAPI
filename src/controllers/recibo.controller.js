@@ -95,17 +95,17 @@ export const createRecibo = async (req, res) => {
   try {
     const recibo = await prisma.recibo.create({
       data: {
-        usuarioId,
-        LecturaActual,
-        LecturaAnterior,
+        usuarioId: parseInt(usuarioId),
+        LecturaActual: parseInt(LecturaActual),
+        LecturaAnterior: parseInt(LecturaAnterior),
         InicioPeriodo: new Date(InicioPeriodo),
         FinPeriodo: new Date(FinPeriodo),
-        Subtotal,
+        Subtotal: parseFloat(Subtotal),
         concepto: {
           create: conceptos.map((concepto) => ({
-            idCategoriaConcepto: concepto.idCategoriaConcepto,
-            TotalPeriodo: concepto.TotalPeriodo,
-            Precio: concepto.Precio,
+            idCategoriaConcepto: parseInt(concepto.idCategoriaConcepto),
+            TotalPeriodo: parseInt(concepto.TotalPeriodo),
+            Precio: parseFloat(concepto.Precio),
           })),
         },
       },

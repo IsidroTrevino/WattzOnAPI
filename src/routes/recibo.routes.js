@@ -1,11 +1,5 @@
 import { Router } from "express";
-import {
-  getReciboById,
-  getRecibosByUsuarioId,
-  createRecibo,
-  updateRecibo,
-  deleteRecibo,
-} from '../controllers/recibo.controller.js';
+import { getReciboById, getRecibosByUsuarioId, createRecibo, updateRecibo, deleteRecibo } from '../controllers/recibo.controller.js';
 import { authenticateToken } from '../middleware/auth.js';
 
 const router = Router();

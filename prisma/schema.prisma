@@ -50,7 +50,7 @@ model Recibo {
   LecturaAnterior Int
   InicioPeriodo   DateTime
   FinPeriodo      DateTime
-  Subtotal        Float
+  Subtotal        Decimal
   concepto        Concepto[]
   Usuario         Usuario    @relation(fields: [usuarioId], references: [usuarioId])
 }
@@ -60,7 +60,7 @@ model Concepto {
   idRecibo            Int
   idCategoriaConcepto Int
   TotalPeriodo        Int
-  Precio              Float
+  Precio              Decimal
   recibo              Recibo            @relation(fields: [idRecibo], references: [idRecibo])
   categoriaConcepto   CategoriaConcepto @relation(fields: [idCategoriaConcepto], references: [idCategoriaConcepto])
 }

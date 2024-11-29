@@ -66,11 +66,11 @@ export const getRecibosByUsuarioId = async (req, res) => {
       LecturaAnterior: recibo.LecturaAnterior,
       InicioPeriodo: recibo.InicioPeriodo,
       FinPeriodo: recibo.FinPeriodo,
-      Subtotal: recibo.Subtotal,
+      Subtotal: parseFloat(recibo.Subtotal),
       conceptos: recibo.concepto.map((concepto) => ({
         categoria: concepto.categoriaConcepto.Consumo,
         TotalPeriodo: concepto.TotalPeriodo,
-        Precio: concepto.Precio,
+        Precio: parseFloat(concepto.Precio),
       })),
     }));
 

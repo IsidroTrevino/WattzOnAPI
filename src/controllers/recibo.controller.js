@@ -26,12 +26,12 @@ export const getReciboById = async (req, res) => {
       LecturaAnterior: recibo.LecturaAnterior,
       InicioPeriodo: recibo.InicioPeriodo,
       FinPeriodo: recibo.FinPeriodo,
-      Subtotal: recibo.Subtotal,
+      Subtotal: parseFloat(recibo.Subtotal),
       conceptos: recibo.concepto.map((concepto) => ({
         idConcepto: concepto.idConcepto,
         categoria: concepto.categoriaConcepto.Consumo,
         TotalPeriodo: concepto.TotalPeriodo,
-        Precio: concepto.Precio,
+        Precio: parseFloat(concepto.Precio),
       })),
     });
   } catch (error) {
@@ -151,7 +151,7 @@ export const updateRecibo = async (req, res) => {
         FinPeriodo: new Date(FinPeriodo),
         Subtotal,
         concepto: {
-          deleteMany: {}, // Remove existing conceptos
+          deleteMany: {},
           create: conceptos.map((concepto) => ({
             idCategoriaConcepto: concepto.idCategoriaConcepto,
             TotalPeriodo: concepto.TotalPeriodo,
@@ -173,15 +173,21 @@ export const deleteRecibo = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const recibo = await prisma.recibo.delete({
-      where: { idRecibo: parseInt(id) },
-      include: { concepto: true },
+    await prisma.$transaction(async (prisma) => {
+
+      await prisma.concepto.deleteMany({
+        where: { idRecibo: parseInt(id) },
+      });
+
+      await prisma.recibo.delete({
+        where: { idRecibo: parseInt(id) },
+      });
     });
 
-    res.json(recibo);
+    res.json({ message: "Eliminado" });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Error al eliminar el recibo:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 

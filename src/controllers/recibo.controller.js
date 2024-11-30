@@ -68,7 +68,9 @@ export const getRecibosByUsuarioId = async (req, res) => {
       FinPeriodo: recibo.FinPeriodo,
       Subtotal: parseFloat(recibo.Subtotal),
       conceptos: recibo.concepto.map((concepto) => ({
-        categoria: concepto.categoriaConcepto.Consumo,
+        idRecibo: recibo.idRecibo,
+        idCategoriaConcepto: concepto.idCategoriaConcepto,
+        //categoria: concepto.categoriaConcepto.Consumo,
         TotalPeriodo: concepto.TotalPeriodo,
         Precio: parseFloat(concepto.Precio),
       })),
@@ -112,13 +114,20 @@ export const createRecibo = async (req, res) => {
       include: { concepto: true },
     });
 
-    const respuesta = {
+    // Format the response to use 'conceptos' instead of 'concepto'
+    const formattedRecibo = {
       ...recibo,
-      conceptos: recibo.concepto,
+      Subtotal: parseFloat(recibo.Subtotal),
+      conceptos: recibo.concepto.map((concepto) => ({
+        ...concepto,
+        Precio: parseFloat(concepto.Precio),
+      })),
     };
-    delete respuesta.concepto;
 
-    res.json(respuesta);
+    // Remove the 'concepto' property from the formattedRecibo
+    delete formattedRecibo.concepto;
+
+    res.json(formattedRecibo);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
@@ -148,7 +157,6 @@ export const updateRecibo = async (req, res) => {
         FinPeriodo: new Date(FinPeriodo),
         Subtotal,
         concepto: {
-          deleteMany: {},
           deleteMany: {},
           create: conceptos.map((concepto) => ({
             idCategoriaConcepto: concepto.idCategoriaConcepto,
@@ -188,4 +196,3 @@ export const deleteRecibo = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-

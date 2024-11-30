@@ -112,16 +112,13 @@ export const createRecibo = async (req, res) => {
       include: { concepto: true },
     });
 
-    const formattedRecibo = {
+    const respuesta = {
       ...recibo,
-      Subtotal: parseFloat(recibo.Subtotal), 
-      concepto: recibo.concepto.map((concepto) => ({
-        ...concepto,
-        Precio: parseFloat(concepto.Precio), 
-      })),
+      conceptos: recibo.concepto,
     };
+    delete respuesta.concepto;
 
-    res.json(formattedRecibo);
+    res.json(respuesta);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
@@ -151,6 +148,7 @@ export const updateRecibo = async (req, res) => {
         FinPeriodo: new Date(FinPeriodo),
         Subtotal,
         concepto: {
+          deleteMany: {},
           deleteMany: {},
           create: conceptos.map((concepto) => ({
             idCategoriaConcepto: concepto.idCategoriaConcepto,
